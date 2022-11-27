@@ -158,12 +158,7 @@ class AuthTestSpotipy(unittest.TestCase):
         results = self.spotify.artist_related_artists(self.weezer_urn)
         self.assertTrue('artists' in results)
         self.assertTrue(len(results['artists']) == 20)
-
-        found = False
-        for artist in results['artists']:
-            if artist['name'] == 'Jimmy Eat World':
-                found = True
-        self.assertTrue(found)
+        self.assertIn('Jimmy Eat World', (a['name'] for a in results['artists']))
 
     def test_artist_search(self):
         results = self.spotify.search(q='weezer', type='artist')
